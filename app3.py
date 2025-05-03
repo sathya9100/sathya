@@ -1,23 +1,25 @@
-import numpy as np
+from collections import Counter
+import string
 
-# Define two square matrices
-A = np.array([[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 9]])
+def find_most_frequent_word(file_name):
+    # Open and read the file
+    with open(file_name, 'r') as file:
+        content = file.read()
 
-B = np.array([[9, 8, 7],
-              [6, 5, 4],
-              [3, 2, 1]])
+    # Remove punctuation and convert text to lowercase for consistent comparison
+    content = content.translate(str.maketrans('', '', string.punctuation)).lower()
 
-# Perform matrix multiplication
-result = np.dot(A, B)
+    # Split the content into words
+    words = content.split()
 
-# Print the result
-print("Matrix A:")
-print(A)
+    # Use Counter to count occurrences of each word
+    word_counts = Counter(words)
 
-print("\nMatrix B:")
-print(B)
+    # Find the word with the highest frequency
+    most_common_word, most_common_count = word_counts.most_common(1)[0]
 
-print("\nMultiplication Result (A x B):")
-print(result)
+    print(f"The word with the most occurrences is '{most_common_word}' with {most_common_count} occurrences.")
+
+# Example usage:
+file_name = input("Enter the file name (e.g., 'file1.txt'): ")
+find_most_frequent_word(file_name)
